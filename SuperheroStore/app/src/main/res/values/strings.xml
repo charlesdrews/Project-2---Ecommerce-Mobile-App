@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Superhero Store</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_character_detail">CharacterDetailActivity</string>
+    
+    <string name="character_list_to_detail_shared_element_name">sharedElement</string>
 </resources>

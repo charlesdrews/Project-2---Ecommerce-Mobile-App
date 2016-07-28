@@ -77,13 +77,50 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 String imageUrl = cursor.getString(imgUrlIdx);
 
                 characters.add(new CharacterModel(id, name, description, comicCount, imageUrl));
-                Log.d(TAG, "getAllCharacters: adding " + id + " " + name);
                 cursor.moveToNext();
             }
         }
 
+        Log.d(TAG, "getAllCharacters: added " + characters.size() + " characters");
+
         cursor.close();
+        db.close();
         return characters;
+    }
+
+    public CharacterModel getCharacterById(int characterId) {
+        CharacterModel character = null;
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(
+                CharactersDatabaseContract.TABLE_NAME,
+                null,
+                CharactersDatabaseContract._ID + " = ?",
+                new String[]{String.valueOf(characterId)},
+                null,
+                null,
+                null
+        );
+
+        if (cursor.moveToFirst()) {
+            int idIdx = cursor.getColumnIndex(CharactersDatabaseContract._ID);
+            int nameIdx = cursor.getColumnIndex(CharactersDatabaseContract.NAME_COLUMN);
+            int descIdx = cursor.getColumnIndex(CharactersDatabaseContract.DESCRIPTION_COLUMN);
+            int countIdx = cursor.getColumnIndex(CharactersDatabaseContract.COMIC_COUNT_COLUMN);
+            int imgUrlIdx = cursor.getColumnIndex(CharactersDatabaseContract.IMAGE_URL_COLUMN);
+
+            int id = cursor.getInt(idIdx);
+            String name = cursor.getString(nameIdx);
+            String description = cursor.getString(descIdx);
+            int comicCount = cursor.getInt(countIdx);
+            String imageUrl = cursor.getString(imgUrlIdx);
+
+            character = new CharacterModel(id, name, description, comicCount, imageUrl);
+        }
+
+        cursor.close();
+        db.close();
+        return character;
     }
 
     @Override

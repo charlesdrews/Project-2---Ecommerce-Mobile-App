@@ -3,13 +3,13 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-
-    <dimen name="app_bar_elevation">4dp</dimen>
-    <dimen name="fab_elevation">6dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 
     <dimen name="character_list_item_height">250dp</dimen>
     <dimen name="character_list_item_elevation">2dp</dimen>
-    <dimen name="characer_list_item_bottom_margin">4dp</dimen>
+    <dimen name="character_list_item_bottom_margin">4dp</dimen>
     <dimen name="character_list_item_corner_radius">0dp</dimen>
     <dimen name="character_list_item_name_size">24sp</dimen>
+
+    <dimen name="character_detail_app_bar_height">400dp</dimen>
 </resources>
