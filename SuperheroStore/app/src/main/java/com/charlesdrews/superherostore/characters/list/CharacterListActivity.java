@@ -1,12 +1,14 @@
 package com.charlesdrews.superherostore.characters.list;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -18,11 +20,13 @@ import android.view.MenuItem;
 import com.charlesdrews.superherostore.R;
 import com.charlesdrews.superherostore.characters.data.DatabaseHelper;
 import com.charlesdrews.superherostore.characters.detail.CharacterDetailActivity;
-import com.charlesdrews.superherostore.characters.interfaces.CharacterRvLayoutManager;
 import com.charlesdrews.superherostore.characters.interfaces.CharacterRvOnItemClickListener;
 import com.charlesdrews.superherostore.characters.list.presenter.CharacterRvAdapter;
-import com.charlesdrews.superherostore.characters.list.presenter.CharacterRvLinearLayoutManager;
+import com.charlesdrews.superherostore.characters.list.presenter.GridDividerItemDecoration;
+import com.charlesdrews.superherostore.characters.list.presenter.WrapGridLayoutManager;
+import com.charlesdrews.superherostore.characters.list.presenter.WrapLinearLayoutManager;
 import com.charlesdrews.superherostore.characters.list.presenter.CharacterRvOnScrollListener;
+import com.charlesdrews.superherostore.characters.list.presenter.LinearDividerItemDecoration;
 import com.charlesdrews.superherostore.characters.model.CharacterModel;
 
 import java.util.ArrayList;
@@ -35,11 +39,13 @@ public class CharacterListActivity extends AppCompatActivity
     private static final String LIST_STATE_KEY = "list_state_key";
     private static final String CURRENT_PAGE_KEY = "current_page_key";
 
+    private static final int NUMBER_OF_COLUMNS = 2;
+
     public static final String CHARACTER_ID_KEY = "character_id_key";
 
     protected DatabaseHelper mDatabaseHelper;
     protected RecyclerView mRecyclerView;
-    protected CharacterRvLinearLayoutManager mLayoutManager;
+    protected LinearLayoutManager mLayoutManager;
     protected CharacterRvOnScrollListener mOnScrollListener;
     protected CharacterRvAdapter mAdapter;
     protected List<CharacterModel> mCharacters;
@@ -58,8 +64,16 @@ public class CharacterListActivity extends AppCompatActivity
 
         mRecyclerView = (RecyclerView) findViewById(R.id.character_list_recycler_view);
 
-        mLayoutManager = new CharacterRvLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            mLayoutManager = new WrapGridLayoutManager(this, NUMBER_OF_COLUMNS);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mRecyclerView.addItemDecoration(new GridDividerItemDecoration(NUMBER_OF_COLUMNS));
+        } else {
+            mLayoutManager = new WrapLinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+            mRecyclerView.addItemDecoration(new LinearDividerItemDecoration());
+        }
 
         if (savedInstanceState != null) {
             mListState = savedInstanceState.getParcelable(LIST_STATE_KEY);

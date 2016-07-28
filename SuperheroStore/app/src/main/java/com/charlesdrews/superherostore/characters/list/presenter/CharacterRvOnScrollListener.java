@@ -1,9 +1,9 @@
 package com.charlesdrews.superherostore.characters.list.presenter;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.charlesdrews.superherostore.characters.interfaces.CharacterRvLayoutManager;
 
 /**
  * Created by charlie on 7/28/16.
@@ -16,9 +16,9 @@ public abstract class CharacterRvOnScrollListener extends RecyclerView.OnScrollL
     private int mPreviousTotal = 0;
     private boolean mLoading = true;
     private int mCurrentPage = 1;
-    private CharacterRvLayoutManager mLayoutManager;
+    private LinearLayoutManager mLayoutManager;
 
-    public CharacterRvOnScrollListener(CharacterRvLayoutManager layoutManager) {
+    public CharacterRvOnScrollListener(LinearLayoutManager layoutManager) {
         mLayoutManager = layoutManager;
     }
 
@@ -28,7 +28,7 @@ public abstract class CharacterRvOnScrollListener extends RecyclerView.OnScrollL
 
         int visibleItemCount = recyclerView.getChildCount();
         int totalItemCount = mLayoutManager.getItemCount();
-        int firstVisibleItem = mLayoutManager.getFirstVisibleItemPosition();
+        int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
 
         if (mLoading) {
             Log.d(TAG, "onScrolled: loading (" + totalItemCount + " loaded)");

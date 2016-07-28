@@ -10,17 +10,11 @@ import com.charlesdrews.superherostore.characters.interfaces.CharacterRvLayoutMa
 /**
  * Created by charlie on 7/28/16.
  */
-public class CharacterRvLinearLayoutManager extends LinearLayoutManager
-        implements CharacterRvLayoutManager {
-    private static final String TAG = CharacterRvLinearLayoutManager.class.getSimpleName();
+public class WrapLinearLayoutManager extends LinearLayoutManager {
+    private static final String TAG = WrapLinearLayoutManager.class.getSimpleName();
 
-    public CharacterRvLinearLayoutManager(Context context, int orientation, boolean reverseLayout) {
+    public WrapLinearLayoutManager(Context context, int orientation, boolean reverseLayout) {
         super(context, orientation, reverseLayout);
-    }
-
-    @Override
-    public int getFirstVisibleItemPosition() {
-        return findFirstVisibleItemPosition();
     }
 
     // likely bug in RecyclerView per http://stackoverflow.com/a/38611931
