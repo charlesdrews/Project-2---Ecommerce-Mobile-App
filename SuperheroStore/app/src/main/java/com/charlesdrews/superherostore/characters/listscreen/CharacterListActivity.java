@@ -1,4 +1,4 @@
-package com.charlesdrews.superherostore.characters.list;
+package com.charlesdrews.superherostore.characters.listscreen;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -19,14 +18,14 @@ import android.view.MenuItem;
 
 import com.charlesdrews.superherostore.R;
 import com.charlesdrews.superherostore.characters.data.DatabaseHelper;
-import com.charlesdrews.superherostore.characters.detail.CharacterDetailActivity;
+import com.charlesdrews.superherostore.characters.detailscreen.CharacterDetailActivity;
 import com.charlesdrews.superherostore.characters.interfaces.CharacterRvOnItemClickListener;
-import com.charlesdrews.superherostore.characters.list.presenter.CharacterRvAdapter;
-import com.charlesdrews.superherostore.characters.list.presenter.GridDividerItemDecoration;
-import com.charlesdrews.superherostore.characters.list.presenter.WrapGridLayoutManager;
-import com.charlesdrews.superherostore.characters.list.presenter.WrapLinearLayoutManager;
-import com.charlesdrews.superherostore.characters.list.presenter.CharacterRvOnScrollListener;
-import com.charlesdrews.superherostore.characters.list.presenter.LinearDividerItemDecoration;
+import com.charlesdrews.superherostore.characters.listscreen.presenter.CharacterRvAdapter;
+import com.charlesdrews.superherostore.characters.listscreen.presenter.GridDividerItemDecoration;
+import com.charlesdrews.superherostore.characters.listscreen.presenter.WrapGridLayoutManager;
+import com.charlesdrews.superherostore.characters.listscreen.presenter.WrapLinearLayoutManager;
+import com.charlesdrews.superherostore.characters.listscreen.presenter.CharacterRvOnScrollListener;
+import com.charlesdrews.superherostore.characters.listscreen.presenter.LinearDividerItemDecoration;
 import com.charlesdrews.superherostore.characters.model.CharacterModel;
 
 import java.util.ArrayList;

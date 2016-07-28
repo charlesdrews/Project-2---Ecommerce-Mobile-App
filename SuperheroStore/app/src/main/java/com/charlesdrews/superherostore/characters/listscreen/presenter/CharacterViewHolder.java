@@ -1,4 +1,4 @@
-package com.charlesdrews.superherostore.characters.list.presenter;
+package com.charlesdrews.superherostore.characters.listscreen.presenter;
 
 import android.view.View;
 import android.widget.ImageView;

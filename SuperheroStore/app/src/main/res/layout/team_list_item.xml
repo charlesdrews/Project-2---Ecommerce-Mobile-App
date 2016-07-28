@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:contentPadding="0dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/team_list_item_image"
+            android:layout_marginRight="@dimen/team_list_item_spacer"
+            android:layout_width="@dimen/team_list_item_image_size"
+            android:layout_height="@dimen/team_list_item_image_size" />
+
+        <TextView
+            android:id="@+id/team_list_item_name"
+            android:gravity="end"
+            android:layout_margin="@dimen/team_list_item_name_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</android.support.v7.widget.CardView>

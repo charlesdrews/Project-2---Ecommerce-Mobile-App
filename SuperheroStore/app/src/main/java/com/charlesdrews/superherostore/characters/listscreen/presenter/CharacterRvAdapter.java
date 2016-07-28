@@ -1,4 +1,4 @@
-package com.charlesdrews.superherostore.characters.list.presenter;
+package com.charlesdrews.superherostore.characters.listscreen.presenter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package com.charlesdrews.superherostore.characters.list.presenter;
+package com.charlesdrews.superherostore.characters.listscreen.presenter;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;

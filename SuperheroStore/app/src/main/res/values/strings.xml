@@ -4,4 +4,9 @@
     <string name="title_activity_character_detail">CharacterDetailActivity</string>
     
     <string name="character_list_to_detail_shared_element_name">sharedElement</string>
+    <string name="character_not_found">Character not found</string>
+    <string name="character_desc_unavailable">Character description unavailable</string>
+    <string name="character_comic_count">Featured in %d available comics</string>
+    <string name="add_to_team_message">%s was added to your team</string>
+    <string name="remove_from_team_message">%s was removed from your team</string>
 </resources>

@@ -14,4 +14,9 @@
     <dimen name="character_list_item_corner_radius">0dp</dimen>
     <dimen name="character_list_item_name_size">24sp</dimen>
 
+    <dimen name="team_list_item_elevation">2dp</dimen>
+    <dimen name="team_list_item_corner_radius">10dp</dimen>
+    <dimen name="team_list_item_image_size">60dp</dimen>
+    <dimen name="team_list_item_name_margin">5dp</dimen>
+    <dimen name="team_list_item_spacer">5dp</dimen>
 </resources>

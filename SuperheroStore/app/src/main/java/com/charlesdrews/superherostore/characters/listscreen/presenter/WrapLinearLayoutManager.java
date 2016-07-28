@@ -1,11 +1,9 @@
-package com.charlesdrews.superherostore.characters.list.presenter;
+package com.charlesdrews.superherostore.characters.listscreen.presenter;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-
-import com.charlesdrews.superherostore.characters.interfaces.CharacterRvLayoutManager;
 
 /**
  * Created by charlie on 7/28/16.
