@@ -14,7 +14,10 @@
 
         <ImageView
             android:id="@+id/team_list_item_image"
+            android:scaleType="centerCrop"
+            android:background="@color/colorPrimaryMedium"
             android:layout_marginRight="@dimen/team_list_item_spacer"
+            android:layout_marginEnd="@dimen/team_list_item_spacer"
             android:layout_width="@dimen/team_list_item_image_size"
             android:layout_height="@dimen/team_list_item_image_size" />
 

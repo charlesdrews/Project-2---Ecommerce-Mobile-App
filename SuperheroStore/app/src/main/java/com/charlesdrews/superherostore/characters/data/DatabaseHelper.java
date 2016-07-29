@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "data.db";
     private static final int DATABASE_VERSION = 1;
 
-    public static final int PAGE_SIZE = 10;
+    public static final int PAGE_SIZE = 20;
 
     private static DatabaseHelper sInstance;
 
@@ -81,8 +81,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
 
-        Log.d(TAG, "getAllCharacters: added " + characters.size() + " characters");
-
         cursor.close();
         db.close();
         return characters;
@@ -121,6 +119,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return character;
+    }
+
+    public List<CharacterModel> searchCharacters(String query) {
+        return searchCharacters(query, 0);
+    }
+
+    public List<CharacterModel> searchCharacters(String query, int pageNumber) {
+        List<CharacterModel> characters = new ArrayList<>(PAGE_SIZE);
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(
+                CharactersDatabaseContract.TABLE_NAME,
+                null,
+                CharactersDatabaseContract.NAME_COLUMN + " LIKE ?",
+                new String[]{"%" + query + "%"},
+                null,
+                null,
+                CharactersDatabaseContract._ID,             // order by id
+                (pageNumber * PAGE_SIZE) + "," + PAGE_SIZE  // offset,limit
+        );
+
+        if (cursor.moveToFirst()) {
+            int idIdx = cursor.getColumnIndex(CharactersDatabaseContract._ID);
+            int nameIdx = cursor.getColumnIndex(CharactersDatabaseContract.NAME_COLUMN);
+            int descIdx = cursor.getColumnIndex(CharactersDatabaseContract.DESCRIPTION_COLUMN);
+            int countIdx = cursor.getColumnIndex(CharactersDatabaseContract.COMIC_COUNT_COLUMN);
+            int imgUrlIdx = cursor.getColumnIndex(CharactersDatabaseContract.IMAGE_URL_COLUMN);
+
+            while (!cursor.isAfterLast()) {
+                int id = cursor.getInt(idIdx);
+                String name = cursor.getString(nameIdx);
+                String description = cursor.getString(descIdx);
+                int comicCount = cursor.getInt(countIdx);
+                String imageUrl = cursor.getString(imgUrlIdx);
+
+                characters.add(new CharacterModel(id, name, description, comicCount, imageUrl));
+                cursor.moveToNext();
+            }
+        }
+
+        cursor.close();
+        db.close();
+        return characters;
     }
 
     @Override

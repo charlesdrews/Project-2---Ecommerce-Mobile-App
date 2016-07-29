@@ -38,14 +38,6 @@ public class TeamDataStore {
         return mCharacters;
     }
 
-    public List<Integer> getCharacterIds() {
-        List<Integer> ids = new ArrayList<>(mCharacters.size());
-        for (CharacterModel character : mCharacters) {
-            ids.add(character.getId());
-        }
-        return ids;
-    }
-
     public boolean addCharacter(CharacterModel character) {
         return mCharacters.add(character);
     }

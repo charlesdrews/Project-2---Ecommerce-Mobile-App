@@ -1,15 +1,18 @@
 package com.charlesdrews.superherostore.characters.listscreen;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +30,7 @@ import com.charlesdrews.superherostore.characters.listscreen.presenter.WrapLinea
 import com.charlesdrews.superherostore.characters.listscreen.presenter.CharacterRvOnScrollListener;
 import com.charlesdrews.superherostore.characters.listscreen.presenter.LinearDividerItemDecoration;
 import com.charlesdrews.superherostore.characters.model.CharacterModel;
+import com.charlesdrews.superherostore.team.dialog.TeamDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +41,7 @@ public class CharacterListActivity extends AppCompatActivity
     private static final String TAG = CharacterListActivity.class.getSimpleName();
     private static final String LIST_STATE_KEY = "list_state_key";
     private static final String CURRENT_PAGE_KEY = "current_page_key";
-
+    private static final String TEAM_DIALOG_TAG = "team_dialog_tag";
     private static final int NUMBER_OF_COLUMNS = 2;
 
     public static final String CHARACTER_ID_KEY = "character_id_key";
@@ -50,6 +54,8 @@ public class CharacterListActivity extends AppCompatActivity
     protected List<CharacterModel> mCharacters;
     protected Parcelable mListState;
     protected int mCurrentPage = 0;
+    protected boolean mDisplayingSearchResults = false;
+    protected String mCurrentQuery = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +90,13 @@ public class CharacterListActivity extends AppCompatActivity
             public void onLoadMore(int currentPage) {
                 Log.d(TAG, "onLoadMore: loading page " + currentPage);
                 mCurrentPage = currentPage;
-                mCharacters.addAll(mDatabaseHelper.getAllCharacters(currentPage));
+
+                if (mDisplayingSearchResults) {
+                    mCharacters.addAll(mDatabaseHelper.searchCharacters(mCurrentQuery, currentPage));
+                } else {
+                    mCharacters.addAll(mDatabaseHelper.getAllCharacters(currentPage));
+                }
+
                 mAdapter.notifyItemRangeInserted(
                         currentPage * DatabaseHelper.PAGE_SIZE,
                         DatabaseHelper.PAGE_SIZE
@@ -96,8 +108,9 @@ public class CharacterListActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                TeamDialogFragment teamDialog = TeamDialogFragment.newInstance(new Bundle());
+                teamDialog.show(fragmentManager, TEAM_DIALOG_TAG);
             }
         });
     }
@@ -105,7 +118,6 @@ public class CharacterListActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart: ");
 
         for (int i = 0; i <= mCurrentPage; i++) {
             mCharacters.addAll(mDatabaseHelper.getAllCharacters(i));
@@ -117,13 +129,11 @@ public class CharacterListActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume: ");
 
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addOnScrollListener(mOnScrollListener);
 
         if (mListState != null) {
-            Log.d(TAG, "onResume: restore list state");
             mLayoutManager.onRestoreInstanceState(mListState);
         }
     }
@@ -131,14 +141,13 @@ public class CharacterListActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "onPause: ");
+
         mRecyclerView.removeOnScrollListener(mOnScrollListener);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Log.d(TAG, "onSaveInstanceState: ");
 
         mListState = mLayoutManager.onSaveInstanceState();
         outState.putParcelable(LIST_STATE_KEY, mListState);
@@ -148,24 +157,75 @@ public class CharacterListActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_character_list, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                doSearch(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if (newText.length() > 2) {
+                    doSearch(newText);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        MenuItemCompat.setOnActionExpandListener(menu.findItem(R.id.action_search),
+                new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                mDisplayingSearchResults = false;
+                mCurrentQuery = "";
+                mCurrentPage = 0;
+
+                mCharacters.clear();
+                mCharacters.addAll(mDatabaseHelper.getAllCharacters());
+                mAdapter.notifyDataSetChanged();
+
+                return true;
+            }
+        });
+
         return true;
     }
 
+    private void doSearch(String query) {
+        Log.d(TAG, "doSearch: searching for " + query);
+
+        mCharacters.clear();
+        mCharacters.addAll(mDatabaseHelper.searchCharacters(query));
+        mAdapter.notifyDataSetChanged();
+
+        mCurrentPage = 0;
+        mDisplayingSearchResults = true;
+        mCurrentQuery = query;
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                return true;
+            case R.id.action_settings:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
