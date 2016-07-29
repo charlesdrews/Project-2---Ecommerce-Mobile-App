@@ -14,6 +14,7 @@ import com.charlesdrews.superherostore.characters.model.CharacterModel;
  * Created by charlie on 7/28/16.
  */
 public class TeamItemViewHolder extends DataBinder<CharacterModel> {
+    private CharacterModel mCharacter;
     private ImageView mImage;
     private TextView mName;
 
@@ -26,11 +27,17 @@ public class TeamItemViewHolder extends DataBinder<CharacterModel> {
 
     @Override
     public void bindData(CharacterModel data) {
+        mCharacter = data;
+
         mName.setText(data.getName());
 
         Glide.with(itemView.getContext())
                 .load(data.getImageUrl())
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(mImage);
+    }
+
+    public CharacterModel getCharacter() {
+        return mCharacter;
     }
 }

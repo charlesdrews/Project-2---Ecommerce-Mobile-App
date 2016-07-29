@@ -19,4 +19,7 @@
     <dimen name="team_list_item_image_size">60dp</dimen>
     <dimen name="team_list_item_name_margin">5dp</dimen>
     <dimen name="team_list_item_spacer">5dp</dimen>
+    <dimen name="team_dialog_title_size">24sp</dimen>
+    <dimen name="team_dialog_close_button_margin">6dp</dimen>
+    <dimen name="team_dialog_toolbar_elevation">4dp</dimen>
 </resources>
