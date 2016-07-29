@@ -45,4 +45,8 @@ public class TeamDataStore {
     public boolean removeCharacter(CharacterModel character) {
         return mCharacters.remove(character);
     }
+
+    public void removeAllCharacters() {
+        mCharacters.clear();
+    }
 }

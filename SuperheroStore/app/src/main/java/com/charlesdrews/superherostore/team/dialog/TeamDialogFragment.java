@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.charlesdrews.superherostore.R;
@@ -45,7 +47,6 @@ public class TeamDialogFragment extends DialogFragment {
         fragment.setArguments(args);
         return fragment;
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,9 +94,10 @@ public class TeamDialogFragment extends DialogFragment {
         mDoneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO
+                //TODO - add team to database
+                mTeamDataStore.removeAllCharacters();
                 getDialog().dismiss();
-                Toast.makeText(getActivity(), "CHECKOUT", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Team Created!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -125,6 +127,30 @@ public class TeamDialogFragment extends DialogFragment {
                 mTeamDataStore.removeCharacter(character);
                 mCharactersInTeam.remove(character);
                 mAdapter.notifyDataSetChanged();
+
+                //TODO set up snackbars for removing characters from team
+                /*
+                // prep snackbar to show if character is removed (user clicks "UNDO")
+                final Snackbar removeSnackBar = Snackbar.make(view, removeCharacterMessage,
+                        Snackbar.LENGTH_LONG);
+                removeSnackBar.getView().setBackgroundResource(R.color.colorAccent);
+                ((TextView) removeSnackBar.getView()
+                        .findViewById(android.support.design.R.id.snackbar_text))
+                        .setTextColor(Color.BLACK);
+
+                // prep snackbar to show character was added and offer chance to UNDO
+                final Snackbar addSnackBar = Snackbar
+                        .make(view, addCharacterMessage, Snackbar.LENGTH_INDEFINITE);
+                addSnackBar.setAction("UNDO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // for UNDO action, remove character & show remove snackbar
+                        teamDataStore.removeCharacter(mSelectedCharacter);
+                        removeSnackBar.show();
+                        addSnackBar.dismiss();
+                    }
+                }).show();
+                */
             }
         };
     }

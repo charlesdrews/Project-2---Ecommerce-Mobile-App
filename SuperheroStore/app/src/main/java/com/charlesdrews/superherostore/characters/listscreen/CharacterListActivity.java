@@ -3,17 +3,21 @@ package com.charlesdrews.superherostore.characters.listscreen;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -104,13 +108,33 @@ public class CharacterListActivity extends AppCompatActivity
             }
         };
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 TeamDialogFragment teamDialog = TeamDialogFragment.newInstance(new Bundle());
-                teamDialog.show(fragmentManager, TEAM_DIALOG_TAG);
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    teamDialog.setSharedElementEnterTransition(
+                            TransitionInflater.from(CharacterListActivity.this)
+                                    .inflateTransition(R.transition.change_image_transform)
+                    );
+                    teamDialog.setEnterTransition(
+                            TransitionInflater.from(CharacterListActivity.this)
+                                    .inflateTransition(R.transition.explode)
+                    );
+
+                    ViewCompat.setTransitionName(fab, "DialogContainer");
+                    FragmentTransaction transaction = getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(teamDialog, TEAM_DIALOG_TAG)
+                            .addSharedElement(fab, "DialogContainer");
+                    transaction.commit();
+
+                } else {
+                    teamDialog.show(fragmentManager, TEAM_DIALOG_TAG);
+                }
             }
         });
     }

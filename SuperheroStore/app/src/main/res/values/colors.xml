@@ -8,4 +8,5 @@
     <color name="translucentBlack">#4D000000</color>
     <color name="character_list_item_name">#FFFFFF</color>
     <color name="colorPrimaryMedium">#78909C</color>
+    <color name="colorPrimaryLight">#B0BEC5</color>
 </resources>
