@@ -14,4 +14,7 @@
     <string name="remove_from_team_message">%s was removed from your team</string>
 
     <string name="team_dialog_title">Your team:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

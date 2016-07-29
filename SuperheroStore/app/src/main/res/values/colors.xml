@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#263238</color>
     <color name="colorAccent">#64DD17</color>
 
+    <color name="iconColorLight">#FFFFFFFF</color>
     <color name="translucentBlack">#4D000000</color>
     <color name="character_list_item_name">#FFFFFF</color>
     <color name="colorPrimaryMedium">#78909C</color>

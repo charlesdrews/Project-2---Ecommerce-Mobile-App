@@ -15,20 +15,20 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.charlesdrews.superherostore.R;
 import com.charlesdrews.superherostore.characters.data.DatabaseHelper;
 import com.charlesdrews.superherostore.characters.detailscreen.CharacterDetailActivity;
 import com.charlesdrews.superherostore.characters.interfaces.CharacterRvOnItemClickListener;
 import com.charlesdrews.superherostore.characters.listscreen.presenter.CharacterRvAdapter;
+import com.charlesdrews.superherostore.characters.listscreen.presenter.CharacterRvOnScrollListener;
 import com.charlesdrews.superherostore.characters.listscreen.presenter.GridDividerItemDecoration;
+import com.charlesdrews.superherostore.characters.listscreen.presenter.LinearDividerItemDecoration;
 import com.charlesdrews.superherostore.characters.listscreen.presenter.WrapGridLayoutManager;
 import com.charlesdrews.superherostore.characters.listscreen.presenter.WrapLinearLayoutManager;
-import com.charlesdrews.superherostore.characters.listscreen.presenter.CharacterRvOnScrollListener;
-import com.charlesdrews.superherostore.characters.listscreen.presenter.LinearDividerItemDecoration;
 import com.charlesdrews.superherostore.characters.model.CharacterModel;
 import com.charlesdrews.superherostore.team.dialog.TeamDialogFragment;
 
