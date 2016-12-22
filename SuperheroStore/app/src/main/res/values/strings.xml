@@ -14,4 +14,5 @@
     <string name="remove_from_team_message">%s was removed from your team</string>
 
     <string name="team_dialog_title">Your team:</string>
+    <string name="title_activity_old_teams">OldTeamsActivity</string>
 </resources>

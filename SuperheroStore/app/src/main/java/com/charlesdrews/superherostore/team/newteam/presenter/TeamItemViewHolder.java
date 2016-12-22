@@ -1,4 +1,4 @@
-package com.charlesdrews.superherostore.team.dialog.presenter;
+package com.charlesdrews.superherostore.team.newteam.presenter;
 
 import android.view.View;
 import android.widget.ImageView;

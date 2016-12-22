@@ -1,4 +1,4 @@
-package com.charlesdrews.superherostore.team.dialog.presenter;
+package com.charlesdrews.superherostore.team.newteam.presenter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

@@ -4,7 +4,7 @@
     android:transitionName="DialogContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.charlesdrews.superherostore.team.dialog.TeamDialogFragment">
+    tools:context="com.charlesdrews.superherostore.team.newteam.TeamDialogFragment">
 
     <LinearLayout
         android:orientation="vertical"

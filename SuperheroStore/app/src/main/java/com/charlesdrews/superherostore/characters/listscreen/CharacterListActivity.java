@@ -34,7 +34,7 @@ import com.charlesdrews.superherostore.characters.listscreen.presenter.LinearDiv
 import com.charlesdrews.superherostore.characters.listscreen.presenter.WrapGridLayoutManager;
 import com.charlesdrews.superherostore.characters.listscreen.presenter.WrapLinearLayoutManager;
 import com.charlesdrews.superherostore.characters.model.CharacterModel;
-import com.charlesdrews.superherostore.team.dialog.TeamDialogFragment;
+import com.charlesdrews.superherostore.team.newteam.TeamDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
